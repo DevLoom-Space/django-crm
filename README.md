@@ -43,11 +43,8 @@ Includes authentication, secured CRUD modules, analytics dashboard, and a Kanban
 - SQLite (development)
 - Bootstrap 5
 
----
+## Images
 
-## 📦 Setup (Local Development)
+<img width="1912" height="946" alt="image" src="https://github.com/user-attachments/assets/9de73199-1113-4fd8-a703-059579b70300" />
 
-### 1) Clone the repo
-```bash
-git clone <your-repo-url>
-cd django-crm
+
