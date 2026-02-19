@@ -1,0 +1,53 @@
+# DevLoom CRM (Django)
+
+A clean, backend-focused Customer Relationship Management (CRM) system built with **Django**.  
+Includes authentication, secured CRUD modules, analytics dashboard, and a Kanban-style pipeline board.
+
+---
+
+## ✨ Features
+
+### ✅ Authentication & Security
+- User signup, login, logout
+- Redirects authenticated users away from `/login/` and `/signup/`
+- `LoginRequiredMixin` protection on CRM pages
+- Owner-based access control (prevents URL guessing)
+
+### 🏢 CRM Modules
+- Companies (CRUD)
+- Contacts (CRUD)
+- Deals (CRUD)
+- Activities (CRUD)
+- Notes (CRUD)
+
+### 📊 Dashboard
+- Company and contact counts
+- Deal counts per user
+- Deal stage stats (pipeline overview)
+- Recent activities + notes
+
+### 🧱 Pipeline Board (Kanban)
+- Deals grouped by stage (Lead → Qualified → Proposal → Won/Lost)
+- Drag & drop UI for moving cards (visual-only version)
+
+### 🎨 UI
+- Bootstrap 5 + Bootstrap Icons
+- Consistent UI styling across forms and pages
+- Responsive sidebar layout
+
+---
+
+## 🛠️ Tech Stack
+- Python 3
+- Django 6
+- SQLite (development)
+- Bootstrap 5
+
+---
+
+## 📦 Setup (Local Development)
+
+### 1) Clone the repo
+```bash
+git clone <your-repo-url>
+cd django-crm

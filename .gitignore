@@ -1,0 +1,45 @@
+# === Python / Django ===
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+dist/
+build/
+
+# Django stuff
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+
+# Virtual environments
+env/
+venv/
+.venv/
+
+# Environment variables
+.env
+.env.*
+
+# Static collected files (if you use collectstatic later)
+staticfiles/
+
+# === IDEs ===
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# === OS files ===
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# === Node (if you ever add frontend later) ===
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

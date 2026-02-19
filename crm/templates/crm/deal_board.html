@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block title %}Deals Board | CRM{% endblock %}
+
+{% block page_header %}
+  <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+    <div>
+      <h1 class="h3 mb-1">Pipeline Board</h1>
+      <div class="text-muted small">{{ total_deals }} deal{{ total_deals|pluralize }} in your pipeline</div>
+    </div>
+
+    <div class="d-flex gap-2">
+      <a class="btn btn-primary btn-sm" href="{% url 'deal_create' %}">
+        <i class="bi bi-plus-circle me-1"></i> New Deal
+      </a>
+      <a class="btn btn-outline-secondary btn-sm" href="{% url 'deal_list' %}">
+        <i class="bi bi-table me-1"></i> Table View
+      </a>
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}
+
+  <!-- Search -->
+  <form method="get" class="row g-2 mb-3">
+    <div class="col-md-8">
+      <input
+        type="text"
+        name="q"
+        value="{{ q }}"
+        class="form-control"
+        placeholder="Search deals, company, or contact..."
+      />
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-primary w-100" type="submit">
+        <i class="bi bi-search me-1"></i> Search
+      </button>
+    </div>
+    <div class="col-md-2">
+      <a class="btn btn-outline-secondary w-100" href="{% url 'deal_board' %}">Reset</a>
+    </div>
+  </form>
+
+  <!-- Board -->
+  <div class="kanban-board">
+    {% for col in columns %}
+      <div class="kanban-col">
+        <div class="kanban-col-header">
+          <div class="fw-semibold">{{ col.label }}</div>
+          <span class="badge bg-primary-subtle text-primary badge-stage">{{ col.deals|length }}</span>
+        </div>
+
+<div class="kanban-col" data-stage="{{ col.key }}">
+          {% if col.deals %}
+            {% for deal in col.deals %}
+<div class="card kanban-card shadow-soft"
+     draggable="true"
+     data-deal-id="{{ deal.id }}"
+     data-stage="{{ deal.stage }}">
+                <div class="card-body p-3">
+                  <div class="d-flex align-items-start justify-content-between gap-2">
+                    <div class="fw-semibold">
+                      <a class="text-decoration-none" href="{% url 'deal_detail' deal.pk %}">
+                        {{ deal.title }}
+                      </a>
+                    </div>
+                    <span class="badge badge-stage badge-stage-{{ deal.stage }}">
+                      {{ deal.get_stage_display }}
+                    </span>
+                  </div>
+
+                  <div class="text-muted small mt-1">
+                    <i class="bi bi-building me-1"></i>{{ deal.company.name }}
+                  </div>
+
+                  <div class="d-flex justify-content-between align-items-center mt-2">
+                    <div class="small">
+                      <span class="text-muted">Amount:</span>
+                      <span class="fw-semibold">{{ deal.amount }}</span>
+                    </div>
+                    <div class="small text-muted">
+                      {{ deal.expected_close_date|default:"—" }}
+                    </div>
+                  </div>
+
+                  <div class="d-flex gap-2 mt-3">
+                    <a class="btn btn-sm btn-outline-secondary" href="{% url 'deal_update' deal.pk %}">
+                      <i class="bi bi-pencil"></i>
+                    </a>
+                    <a class="btn btn-sm btn-outline-danger" href="{% url 'deal_delete' deal.pk %}">
+                      <i class="bi bi-trash"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          {% else %}
+            <div class="text-muted small">No deals in this stage.</div>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+{% endblock %}

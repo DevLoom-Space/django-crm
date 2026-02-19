@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Login | CRM{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-12 col-md-6 col-lg-4">
+    <div class="card shadow-soft mt-4">
+      <div class="card-body p-4">
+        <h1 class="h4 mb-1">Welcome back</h1>
+        <p class="text-muted small mb-3">Login to continue</p>
+
+        <form method="post" class="vstack gap-3">
+          {% csrf_token %}
+          {{ form.as_p }}
+
+          <button class="btn btn-primary w-100" type="submit">
+            <i class="bi bi-box-arrow-in-right me-1"></i> Login
+          </button>
+        </form>
+
+        <div class="text-center mt-3 small">
+          Don’t have an account?
+          <a class="text-decoration-none" href="{% url 'signup' %}">Create one</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

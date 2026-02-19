@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Delete Contact | CRM{% endblock %}
+
+{% block page_header %}
+  <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+    <div>
+      <h1 class="h3 mb-1">Delete Contact</h1>
+      <div class="text-muted small">This action cannot be undone</div>
+    </div>
+
+    <a class="btn btn-outline-secondary btn-sm" href="{% url 'contact_detail' object.pk %}">
+      <i class="bi bi-arrow-left me-1"></i> Back
+    </a>
+  </div>
+{% endblock %}
+
+{% block content %}
+  <div class="card shadow-soft border-danger">
+    <div class="card-body">
+      <div class="alert alert-danger mb-3">
+        Are you sure you want to delete <b>{{ object }}</b>?
+      </div>
+
+      <form method="post" class="d-flex gap-2">
+        {% csrf_token %}
+        <button class="btn btn-danger" type="submit">
+          <i class="bi bi-trash me-1"></i> Yes, delete
+        </button>
+        <a class="btn btn-outline-secondary" href="{% url 'contact_detail' object.pk %}">
+          Cancel
+        </a>
+      </form>
+    </div>
+  </div>
+{% endblock %}

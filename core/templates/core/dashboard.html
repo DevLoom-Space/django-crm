@@ -1,0 +1,211 @@
+{% extends "base.html" %}
+{% block title %}Dashboard | CRM{% endblock %}
+
+{% block page_header %}
+  <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+    <div>
+      <h1 class="h3 mb-1">Dashboard</h1>
+      <div class="text-muted small">Overview of your CRM activity</div>
+    </div>
+
+    <div class="d-flex flex-wrap gap-2">
+      <a class="btn btn-primary btn-sm" href="{% url 'deal_create' %}">
+        <i class="bi bi-plus-circle me-1"></i> New Deal
+      </a>
+      <a class="btn btn-outline-primary btn-sm" href="{% url 'contact_create' %}">
+        <i class="bi bi-person-plus me-1"></i> New Contact
+      </a>
+      <a class="btn btn-outline-primary btn-sm" href="{% url 'company_create' %}">
+        <i class="bi bi-building-add me-1"></i> New Company
+      </a>
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}
+
+  <!-- Stats cards -->
+  <div class="row g-3 mb-3">
+    <div class="col-12 col-sm-6 col-xl-3">
+      <div class="card shadow-soft">
+        <div class="card-body">
+          <div class="d-flex align-items-center justify-content-between">
+            <div>
+              <div class="text-muted small">Companies</div>
+              <div class="h4 mb-0">{{ companies_count }}</div>
+            </div>
+            <div class="text-primary fs-3"><i class="bi bi-building"></i></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-sm-6 col-xl-3">
+      <div class="card shadow-soft">
+        <div class="card-body">
+          <div class="d-flex align-items-center justify-content-between">
+            <div>
+              <div class="text-muted small">Contacts</div>
+              <div class="h4 mb-0">{{ contacts_count }}</div>
+            </div>
+            <div class="text-primary fs-3"><i class="bi bi-people"></i></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-sm-6 col-xl-3">
+      <div class="card shadow-soft">
+        <div class="card-body">
+          <div class="d-flex align-items-center justify-content-between">
+            <div>
+              <div class="text-muted small">My Deals</div>
+              <div class="h4 mb-0">{{ my_deals_count }}</div>
+            </div>
+            <div class="text-primary fs-3"><i class="bi bi-cash-coin"></i></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-sm-6 col-xl-3">
+      <div class="card shadow-soft">
+        <div class="card-body">
+          <div class="d-flex align-items-center justify-content-between">
+            <div>
+              <div class="text-muted small">Pending Activities</div>
+              <div class="h4 mb-0">{{ my_pending_activities_count }}</div>
+            </div>
+            <div class="text-primary fs-3"><i class="bi bi-check2-square"></i></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main grid -->
+  <div class="row g-3">
+
+    <!-- Deals by stage -->
+    <div class="col-12 col-xl-4">
+      <div class="card shadow-soft h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center justify-content-between mb-2">
+            <h2 class="h6 mb-0">My Deals by Stage</h2>
+            <a class="small text-decoration-none" href="{% url 'deal_list' %}">View all</a>
+          </div>
+
+          {% if my_deals_by_stage %}
+            <div class="d-flex flex-column gap-2">
+              {% for row in my_deals_by_stage %}
+                <div class="d-flex align-items-center justify-content-between border rounded-3 p-2 bg-white">
+                  <div class="fw-semibold">{{ row.stage_label }}</div>
+                  <span class="badge bg-primary-subtle text-primary badge-stage">{{ row.total }}</span>
+                </div>
+              {% endfor %}
+            </div>
+          {% else %}
+            <div class="text-muted">No deals yet. Create a deal to see your pipeline.</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent activities -->
+    <div class="col-12 col-xl-8">
+      <div class="card shadow-soft h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center justify-content-between mb-2">
+            <h2 class="h6 mb-0">Recent Activities</h2>
+            <a class="small text-decoration-none" href="{% url 'activity_list' %}">View all</a>
+          </div>
+
+          {% if recent_activities %}
+            <div class="table-responsive">
+              <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th>Status</th>
+                    <th>Type</th>
+                    <th>Subject</th>
+                    <th>Deal</th>
+                    <th>Due</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for a in recent_activities %}
+                    <tr>
+                      <td>
+                        {% if a.is_done %}
+                          <span class="badge bg-success-subtle text-success badge-stage">Done</span>
+                        {% else %}
+                          <span class="badge bg-warning-subtle text-warning badge-stage">Pending</span>
+                        {% endif %}
+                      </td>
+                      <td>{{ a.get_activity_type_display }}</td>
+                      <td>{{ a.subject }}</td>
+                      <td>
+                        {% if a.deal %}
+                          <a class="text-decoration-none" href="{% url 'deal_detail' a.deal.pk %}">{{ a.deal.title }}</a>
+                        {% else %}
+                          —
+                        {% endif %}
+                      </td>
+                      <td>{{ a.due_date|default:"—" }}</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          {% else %}
+            <div class="text-muted">No activities yet (linked to your deals).</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent notes -->
+    <div class="col-12">
+      <div class="card shadow-soft">
+        <div class="card-body">
+          <div class="d-flex align-items-center justify-content-between mb-2">
+            <h2 class="h6 mb-0">Recent Notes</h2>
+            <a class="small text-decoration-none" href="{% url 'note_list' %}">View all</a>
+          </div>
+
+          {% if recent_notes %}
+            <div class="table-responsive">
+              <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th>Note</th>
+                    <th>Deal</th>
+                    <th>Created</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for n in recent_notes %}
+                    <tr>
+                      <td>{{ n.body|truncatechars:90 }}</td>
+                      <td>
+                        {% if n.deal %}
+                          <a class="text-decoration-none" href="{% url 'deal_detail' n.deal.pk %}">{{ n.deal.title }}</a>
+                        {% else %}
+                          —
+                        {% endif %}
+                      </td>
+                      <td>{{ n.created_at }}</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          {% else %}
+            <div class="text-muted">No notes yet (linked to your deals).</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+  </div>
+{% endblock %}

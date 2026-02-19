@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Company Form | CRM{% endblock %}
+
+{% block page_header %}
+  <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+    <div>
+      <h1 class="h3 mb-1">Company Form</h1>
+      <div class="text-muted small">Create or update a company profile</div>
+    </div>
+
+    <a class="btn btn-outline-secondary btn-sm" href="{% url 'company_list' %}">
+      <i class="bi bi-arrow-left me-1"></i> Back
+    </a>
+  </div>
+{% endblock %}
+
+{% block content %}
+  <div class="card shadow-soft">
+    <div class="card-body">
+      <form method="post" class="row g-3">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <div class="d-flex gap-2 mt-2">
+          <button class="btn btn-primary" type="submit">
+            <i class="bi bi-check2-circle me-1"></i> Save
+          </button>
+          <a class="btn btn-outline-secondary" href="{% url 'company_list' %}">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}
