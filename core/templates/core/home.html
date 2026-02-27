@@ -1,8 +1,63 @@
 {% extends "base.html" %}
-{% block title %}Home | CRM{% endblock %}
+{% block title %}Home | DevLoom CRM{% endblock %}
 
 {% block content %}
-  <h1>Welcome to DevLoom CRM</h1>
-  <p>This is the home page of the CRM system.</p>
-  <p>Use the navigation bar above to access different sections of the CRM.</p>
+
+<div class="text-center py-5">
+  <h1 class="display-5 fw-bold mb-3">
+    Manage Your Clients Smarter 💼
+  </h1>
+
+  <p class="lead text-muted mb-4">
+    DevLoom CRM helps you track companies, contacts, deals, activities,
+    and notes — all in one streamlined system.
+  </p>
+
+  {% if user.is_authenticated %}
+    <a href="{% url 'dashboard' %}" class="btn btn-primary btn-lg">
+      <i class="bi bi-speedometer2 me-2"></i>
+      Go to Dashboard
+    </a>
+  {% else %}
+    <div class="d-flex justify-content-center gap-3">
+      <a href="{% url 'signup' %}" class="btn btn-primary btn-lg">
+        <i class="bi bi-person-plus me-2"></i>
+        Get Started
+      </a>
+      <a href="{% url 'login' %}" class="btn btn-outline-secondary btn-lg">
+        <i class="bi bi-box-arrow-in-right me-2"></i>
+        Login
+      </a>
+    </div>
+  {% endif %}
+</div>
+
+<hr class="my-5">
+
+<div class="row text-center">
+  <div class="col-md-4 mb-4">
+    <i class="bi bi-building fs-1 text-primary"></i>
+    <h5 class="mt-3">Company Management</h5>
+    <p class="text-muted small">
+      Organize and track all your companies in one place.
+    </p>
+  </div>
+
+  <div class="col-md-4 mb-4">
+    <i class="bi bi-cash-coin fs-1 text-success"></i>
+    <h5 class="mt-3">Deal Pipeline</h5>
+    <p class="text-muted small">
+      Move deals across stages with a visual Kanban board.
+    </p>
+  </div>
+
+  <div class="col-md-4 mb-4">
+    <i class="bi bi-check2-square fs-1 text-warning"></i>
+    <h5 class="mt-3">Activity Tracking</h5>
+    <p class="text-muted small">
+      Never miss follow-ups or important actions.
+    </p>
+  </div>
+</div>
+
 {% endblock %}
