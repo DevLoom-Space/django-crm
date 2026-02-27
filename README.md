@@ -45,6 +45,9 @@ Includes authentication, secured CRUD modules, analytics dashboard, and a Kanban
 
 ## Images
 
+<img width="1919" height="961" alt="image" src="https://github.com/user-attachments/assets/074517bb-45c8-476f-96ed-15d17f88f648" />
+
+
 <img width="1912" height="946" alt="image" src="https://github.com/user-attachments/assets/9de73199-1113-4fd8-a703-059579b70300" />
 
 
